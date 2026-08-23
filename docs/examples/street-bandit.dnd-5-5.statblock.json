@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0",
+  "id": "c4a32de7-69a8-4c75-9f37-a2a43bf45b90",
+  "system": "dungeonsAndDragons",
+  "identity": { "name": "Street Bandit", "subtitle": "Minion" },
+  "description": null,
+  "tags": ["cr-1-8", "minion", "humanoid"],
+  "source": { "origin": "imported", "sourceSystem": "dungeonsAndDragons", "reference": "Street Bandit-5e.jpg" },
+  "metadata": {
+    "ownerId": "00000000-0000-0000-0000-000000000001",
+    "status": "draft",
+    "createdAt": "2026-08-23T00:00:00Z",
+    "updatedAt": "2026-08-23T00:00:00Z"
+  },
+  "systemData": {
+    "rulesVersion": "5.5",
+    "creature": { "size": "Medium", "type": "Humanoid", "tags": ["any Ancestry"], "role": "Minion", "challengeRating": "1/8", "experience": 5 },
+    "combat": { "armorClass": 12, "initiative": { "modifier": 1, "score": 11 }, "hitPoints": 5, "speed": "30 ft, climb 20 ft" },
+    "abilities": {
+      "str": { "score": 11, "modifier": 0 }, "dex": { "score": 12, "modifier": 1 }, "con": { "score": 12, "modifier": 1 },
+      "int": { "score": 10, "modifier": 0 }, "wis": { "score": 9, "modifier": -1 }, "cha": { "score": 10, "modifier": 0 }
+    },
+    "savingThrows": [{ "name": "Dex", "bonus": 2 }, { "name": "Con", "bonus": 1 }],
+    "skills": [{ "name": "Acrobatics", "bonus": 3 }, { "name": "Stealth", "bonus": 3 }, { "name": "Sleight of Hand", "bonus": 3 }],
+    "senses": ["passive Perception 10"],
+    "languages": ["Common", "Ancestry"],
+    "sections": [
+      {
+        "kind": "traits",
+        "entries": [
+          { "name": "Numerical Superiority", "text": "When more than one Street Bandit attaaque the same target, they gain an extra 1 bonus to hit per Street Bandit they attacking the target and an extra 1 damage per Street Bandit they attacking the target." },
+          { "name": "Minion", "text": "If the Street Bandit takes damages from an attack or as the result of a failed saving throws, their hit point are reduced to 0. If the Street Bandit takes damage from another effect, they die if the damage equals or exceeds their hit points maximum, otherwise they take no damage." }
+        ]
+      },
+      {
+        "kind": "actions",
+        "entries": [{ "name": "Club", "text": "Melee Weapon Attack: +1 to hit, reach 5 ft. Hit 3 (1d4+1) Bludgeoning damage" }]
+      }
+    ]
+  }
+}

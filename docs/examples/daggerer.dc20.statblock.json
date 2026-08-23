@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0",
+  "id": "55f77a8e-558a-40f4-9b48-24e3f0db8751",
+  "system": "dc20",
+  "identity": { "name": "Daggerer", "subtitle": "Level 1 Lurker" },
+  "description": null,
+  "tags": ["level-1", "lurker", "humanoid"],
+  "source": { "origin": "imported", "sourceSystem": "dc20", "reference": "Daggerer.jpg" },
+  "metadata": {
+    "ownerId": "00000000-0000-0000-0000-000000000001",
+    "status": "draft",
+    "createdAt": "2026-08-23T00:00:00Z",
+    "updatedAt": "2026-08-23T00:00:00Z"
+  },
+  "systemData": {
+    "level": 1,
+    "role": "Lurker",
+    "creatureDetails": "Medium Humanoid (any Ancestry)",
+    "statistics": { "hitPoints": 7, "physicalDefense": [12, 17, 22], "arcaneDefense": [11, 16, 21] },
+    "attributes": {
+      "mig": { "value": 0 }, "agi": { "value": 3 }, "cha": { "value": 0, "alternateValue": 1 }, "int": { "value": 2 }
+    },
+    "skills": [{ "name": "Acrobatics", "bonus": 5 }, { "name": "Stealth", "bonus": 5 }],
+    "senses": ["Passive Awareness 11"],
+    "languages": ["Common", "(Ancestry)*"],
+    "sections": [
+      {
+        "kind": "features",
+        "title": "Features",
+        "entries": [{ "name": "Disengage or Hide", "cost": "0 AP, only once by round", "text": "Disengage or Hide: Cost 0 AP, only once by round." }]
+      },
+      {
+        "kind": "actions",
+        "title": "Actions",
+        "count": 4,
+        "entries": [{
+          "name": "Dagger",
+          "cost": "(1)",
+          "attack": { "attackBonus": 3, "saveDc": 13, "speed": 5, "range": "Melee or Ranged 10/20", "damage": "1 Piercing" },
+          "text": "Dagger: Melee or Ranged 10/20, 1 Piercing.",
+          "enhancements": [
+            { "name": "Power Attack", "cost": "(+1)", "text": "+1 damage" },
+            { "name": "Extended dagger throw", "cost": "(+1)", "text": "+5 Spaces" }
+          ]
+        }]
+      },
+      {
+        "kind": "reactions",
+        "title": "Reactions",
+        "entries": [{ "name": "Evasion", "cost": "(1)", "text": "When an effect that he can see deals damage to him, He can halve the damage. If the triggering effect deals half damage on a Miss (or when you succeed a Save), he takes no damage instead." }]
+      }
+    ]
+  }
+}

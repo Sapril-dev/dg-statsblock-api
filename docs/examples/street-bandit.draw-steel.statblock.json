@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "id": "75c58f0c-cc1f-4c19-9871-3060ff886b9f",
+  "system": "drawSteel",
+  "identity": { "name": "Street Bandit", "subtitle": "Level 1 Minion Ambusher" },
+  "description": null,
+  "tags": ["level-1", "minion", "ambusher", "humanoid"],
+  "source": { "origin": "imported", "sourceSystem": "drawSteel", "reference": "Street Bandit.png" },
+  "metadata": {
+    "ownerId": "00000000-0000-0000-0000-000000000001",
+    "status": "draft",
+    "createdAt": "2026-08-23T00:00:00Z",
+    "updatedAt": "2026-08-23T00:00:00Z"
+  },
+  "systemData": {
+    "level": 1,
+    "organization": "minion",
+    "role": "Ambusher",
+    "keywords": ["Any Ancestry", "Humanoid"],
+    "encounterValue": { "value": 3, "forMinions": 4 },
+    "statistics": { "size": "1M", "speed": 5, "stamina": 3, "stability": 0, "freeStrike": 2 },
+    "immunities": ["Corruption 1", "psychic 1"],
+    "weakness": null,
+    "movement": null,
+    "withCaptain": "Gain an edge on strikes",
+    "characteristics": { "might": 0, "agility": 1, "reason": 1, "intuition": 0, "presence": 0 },
+    "signatureAbility": {
+      "name": "Club and Dagger",
+      "category": "signature",
+      "keywords": ["Melee", "Strike", "Weapon"],
+      "distance": "Melee 1",
+      "target": "One creature or object per minion",
+      "powerRoll": {
+        "formula": "2d10 + 2",
+        "tiers": [
+          { "range": "≤11", "text": "1 damage" },
+          { "range": "12–16", "text": "2 damage, push 1" },
+          { "range": "17+", "text": "3 damage, push 2" }
+        ]
+      },
+      "text": "Main action. Melee, Strike, Weapon. Melee 1. One creature or object per minion."
+    },
+    "traits": [{ "name": "Coward", "text": "If the bandit loses his captain in combat, he flees." }]
+  }
+}

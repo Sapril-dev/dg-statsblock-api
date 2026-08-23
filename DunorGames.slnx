@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DunorGames.Api/DunorGames.Api.csproj" />
+    <Project Path="src/DunorGames.Contracts/DunorGames.Contracts.csproj" />
+    <Project Path="src/DunorGames.Domain/DunorGames.Domain.csproj" />
+    <Project Path="src/DunorGames.Infrastructure/DunorGames.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DunorGames.Api.Tests/DunorGames.Api.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dunorgames.local/schemas/daggerheart-system-data/1.0",
+  "title": "Daggerheart systemData",
+  "type": "object",
+  "required": ["tier", "role", "statistics", "features"],
+  "properties": {
+    "tier": { "type": "integer", "minimum": 1 },
+    "role": { "type": "string", "minLength": 1 },
+    "motivations": { "type": "array", "items": { "type": "string" } },
+    "statistics": {
+      "type": "object",
+      "required": ["difficulty", "hitPoints", "stress"],
+      "properties": {
+        "difficulty": { "type": "integer" },
+        "thresholds": { "type": ["string", "null"] },
+        "hitPoints": { "type": "integer", "minimum": 0 },
+        "stress": { "type": "integer", "minimum": 0 },
+        "attack": { "type": "string" },
+        "weapon": { "type": "string" },
+        "range": { "type": "string" },
+        "damage": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "experience": { "type": ["string", "null"] },
+    "features": { "$ref": "#/$defs/ruleEntries" },
+    "actions": { "$ref": "#/$defs/ruleEntries" },
+    "reactions": { "$ref": "#/$defs/ruleEntries" }
+  },
+  "$defs": {
+    "ruleEntries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "text"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "kind": { "enum": ["passive", "action", "reaction", "other"] },
+          "cost": { "type": "string" },
+          "text": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

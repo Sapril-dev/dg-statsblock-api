@@ -1,0 +1,375 @@
+openapi: 3.1.1
+info:
+  title: DunorGames Statblocks API
+  version: 1.0.0
+  description: >-
+    Contract-first API for authoring, storing and exporting DunorGames statblocks.
+    This file defines the v1 HTTP contract; endpoints are implemented later.
+servers:
+  - url: /api/v1
+paths:
+  /statblocks:
+    get:
+      operationId: listStatblocks
+      summary: List statblocks
+      parameters:
+        - $ref: '#/components/parameters/SystemFilter'
+        - $ref: '#/components/parameters/StatusFilter'
+        - $ref: '#/components/parameters/TagFilter'
+        - $ref: '#/components/parameters/QueryFilter'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: A cursor-paginated statblock list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatblockSummaryPage'
+        '401':
+          $ref: '#/components/responses/ProblemUnauthorized'
+    post:
+      operationId: createStatblock
+      summary: Create a statblock draft
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStatblockRequest'
+      responses:
+        '201':
+          description: The statblock was created as a draft.
+          headers:
+            Location:
+              required: true
+              schema:
+                type: string
+                format: uri-reference
+            ETag:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatblockResponse'
+        '400':
+          $ref: '#/components/responses/ProblemBadRequest'
+        '401':
+          $ref: '#/components/responses/ProblemUnauthorized'
+        '422':
+          $ref: '#/components/responses/ProblemValidation'
+  /statblocks/{statblockId}:
+    parameters:
+      - name: statblockId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getStatblock
+      summary: Get a complete statblock
+      responses:
+        '200':
+          description: The complete statblock.
+          headers:
+            ETag:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatblockResponse'
+        '401':
+          $ref: '#/components/responses/ProblemUnauthorized'
+        '403':
+          $ref: '#/components/responses/ProblemForbidden'
+        '404':
+          $ref: '#/components/responses/ProblemNotFound'
+    put:
+      operationId: replaceStatblock
+      summary: Replace all mutable statblock fields
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStatblockRequest'
+      responses:
+        '200':
+          description: The updated statblock.
+          headers:
+            ETag:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatblockResponse'
+        '400':
+          $ref: '#/components/responses/ProblemBadRequest'
+        '401':
+          $ref: '#/components/responses/ProblemUnauthorized'
+        '403':
+          $ref: '#/components/responses/ProblemForbidden'
+        '404':
+          $ref: '#/components/responses/ProblemNotFound'
+        '412':
+          $ref: '#/components/responses/ProblemPrecondition'
+        '422':
+          $ref: '#/components/responses/ProblemValidation'
+    delete:
+      operationId: deleteStatblock
+      summary: Permanently delete a statblock
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
+      responses:
+        '204':
+          description: The statblock was permanently deleted.
+        '401':
+          $ref: '#/components/responses/ProblemUnauthorized'
+        '403':
+          $ref: '#/components/responses/ProblemForbidden'
+        '404':
+          $ref: '#/components/responses/ProblemNotFound'
+        '412':
+          $ref: '#/components/responses/ProblemPrecondition'
+components:
+  parameters:
+    SystemFilter:
+      name: system
+      in: query
+      schema:
+        $ref: '#/components/schemas/StatblockSystem'
+    StatusFilter:
+      name: status
+      in: query
+      schema:
+        $ref: '#/components/schemas/StatblockStatus'
+    TagFilter:
+      name: tag
+      in: query
+      schema:
+        type: string
+    QueryFilter:
+      name: query
+      in: query
+      schema:
+        type: string
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+    IfMatch:
+      name: If-Match
+      in: header
+      required: true
+      schema:
+        type: string
+  responses:
+    ProblemBadRequest:
+      description: Invalid request syntax or required values.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+    ProblemUnauthorized:
+      description: Authentication is required.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+    ProblemForbidden:
+      description: The resource belongs to another user.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+    ProblemNotFound:
+      description: The requested statblock does not exist.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+    ProblemPrecondition:
+      description: The supplied ETag is absent or no longer current.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+    ProblemValidation:
+      description: The request conflicts with the selected system schema.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+  schemas:
+    StatblockSystem:
+      type: string
+      enum: [dungeonsAndDragons, talesOfTheValiant, daggerheart, drawSteel, dc20]
+    StatblockOrigin:
+      type: string
+      enum: [manual, imported, converted]
+    StatblockStatus:
+      type: string
+      enum: [draft, published, archived]
+    StatblockIdentity:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        subtitle:
+          type: [string, 'null']
+        aliases:
+          type: [array, 'null']
+          items:
+            type: string
+    StatblockSource:
+      type: object
+      required: [origin]
+      properties:
+        origin:
+          $ref: '#/components/schemas/StatblockOrigin'
+        sourceSystem:
+          oneOf:
+            - $ref: '#/components/schemas/StatblockSystem'
+            - type: 'null'
+        sourceStatblockId:
+          type: [string, 'null']
+          format: uuid
+        reference:
+          type: [string, 'null']
+    StatblockReadMetadata:
+      type: object
+      required: [status, createdAt, updatedAt]
+      properties:
+        status:
+          $ref: '#/components/schemas/StatblockStatus'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        notes:
+          type: [string, 'null']
+    StatblockResponse:
+      type: object
+      required: [id, schemaVersion, system, identity, tags, source, metadata, systemData]
+      properties:
+        id:
+          type: string
+          format: uuid
+        schemaVersion:
+          type: string
+          example: '1.0'
+        system:
+          $ref: '#/components/schemas/StatblockSystem'
+        identity:
+          $ref: '#/components/schemas/StatblockIdentity'
+        description:
+          type: [string, 'null']
+        tags:
+          type: array
+          items:
+            type: string
+        source:
+          $ref: '#/components/schemas/StatblockSource'
+        metadata:
+          $ref: '#/components/schemas/StatblockReadMetadata'
+        systemData:
+          type: object
+          additionalProperties: true
+    CreateStatblockRequest:
+      type: object
+      required: [schemaVersion, system, identity, tags, source, systemData]
+      properties:
+        schemaVersion:
+          type: string
+          example: '1.0'
+        system:
+          $ref: '#/components/schemas/StatblockSystem'
+        identity:
+          $ref: '#/components/schemas/StatblockIdentity'
+        description:
+          type: [string, 'null']
+        tags:
+          type: array
+          items:
+            type: string
+        source:
+          $ref: '#/components/schemas/StatblockSource'
+        notes:
+          type: [string, 'null']
+        systemData:
+          type: object
+          additionalProperties: true
+    UpdateStatblockRequest:
+      allOf:
+        - $ref: '#/components/schemas/CreateStatblockRequest'
+        - type: object
+          required: [status]
+          properties:
+            status:
+              $ref: '#/components/schemas/StatblockStatus'
+    StatblockSummary:
+      type: object
+      required: [id, system, name, tags, status, updatedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        system:
+          $ref: '#/components/schemas/StatblockSystem'
+        name:
+          type: string
+        subtitle:
+          type: [string, 'null']
+        tags:
+          type: array
+          items:
+            type: string
+        status:
+          $ref: '#/components/schemas/StatblockStatus'
+        updatedAt:
+          type: string
+          format: date-time
+    StatblockSummaryPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatblockSummary'
+        nextCursor:
+          type: [string, 'null']
+    ApiProblem:
+      type: object
+      required: [type, title, status]
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: [string, 'null']
+        instance:
+          type: [string, 'null']
+          format: uri-reference
+        errors:
+          type: [object, 'null']
+          additionalProperties:
+            type: array
+            items:
+              type: string

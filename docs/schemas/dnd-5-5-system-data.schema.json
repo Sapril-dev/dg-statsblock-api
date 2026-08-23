@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dunorgames.local/schemas/dnd-5-5-system-data/1.0",
+  "title": "D&D 5.5 systemData",
+  "type": "object",
+  "required": ["rulesVersion", "creature", "combat", "abilities", "sections"],
+  "properties": {
+    "rulesVersion": { "const": "5.5" },
+    "creature": {
+      "type": "object",
+      "required": ["size", "type"],
+      "properties": {
+        "size": { "type": "string" },
+        "type": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "alignment": { "type": "string" },
+        "role": { "type": "string" },
+        "challengeRating": { "type": "string" },
+        "experience": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "combat": {
+      "type": "object",
+      "required": ["armorClass", "hitPoints", "speed"],
+      "properties": {
+        "armorClass": { "type": ["integer", "string"] },
+        "initiative": { "type": "object", "additionalProperties": true },
+        "hitPoints": { "type": "integer", "minimum": 0 },
+        "hitDice": { "type": "string" },
+        "speed": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "abilities": {
+      "type": "object",
+      "required": ["str", "dex", "con", "int", "wis", "cha"],
+      "properties": {
+        "str": { "$ref": "#/$defs/abilityScore" }, "dex": { "$ref": "#/$defs/abilityScore" },
+        "con": { "$ref": "#/$defs/abilityScore" }, "int": { "$ref": "#/$defs/abilityScore" },
+        "wis": { "$ref": "#/$defs/abilityScore" }, "cha": { "$ref": "#/$defs/abilityScore" }
+      },
+      "additionalProperties": false
+    },
+    "savingThrows": { "type": "array", "items": { "$ref": "#/$defs/namedBonus" } },
+    "skills": { "type": "array", "items": { "$ref": "#/$defs/namedBonus" } },
+    "senses": { "type": "array", "items": { "type": "string" } },
+    "languages": { "type": "array", "items": { "type": "string" } },
+    "defenses": { "type": "object", "additionalProperties": true },
+    "sections": { "type": "array", "items": { "$ref": "#/$defs/section" } }
+  },
+  "$defs": {
+    "abilityScore": {
+      "type": "object",
+      "required": ["score", "modifier"],
+      "properties": { "score": { "type": "integer" }, "modifier": { "type": "integer" } },
+      "additionalProperties": true
+    },
+    "namedBonus": {
+      "type": "object",
+      "required": ["name", "bonus"],
+      "properties": { "name": { "type": "string" }, "bonus": { "type": "integer" } },
+      "additionalProperties": true
+    },
+    "section": {
+      "type": "object",
+      "required": ["kind", "entries"],
+      "properties": {
+        "kind": { "enum": ["traits", "actions", "bonusActions", "reactions", "legendaryActions", "other"] },
+        "entries": { "type": "array", "items": { "$ref": "#/$defs/ruleEntry" } }
+      },
+      "additionalProperties": true
+    },
+    "ruleEntry": {
+      "type": "object",
+      "required": ["name", "text"],
+      "properties": { "name": { "type": "string" }, "text": { "type": "string" } },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dunorgames.local/schemas/statblock-envelope/1.0",
+  "title": "DunorGames Statblock Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "system", "identity", "tags", "source", "metadata", "systemData"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "id": { "type": "string", "format": "uuid" },
+    "system": { "enum": ["dungeonsAndDragons", "talesOfTheValiant", "daggerheart", "drawSteel", "dc20"] },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "aliases": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "description": { "type": ["string", "null"] },
+    "tags": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin"],
+      "properties": {
+        "origin": { "enum": ["manual", "imported", "converted"] },
+        "sourceSystem": { "enum": ["dungeonsAndDragons", "talesOfTheValiant", "daggerheart", "drawSteel", "dc20"] },
+        "sourceStatblockId": { "type": "string", "format": "uuid" },
+        "reference": { "type": "string" }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ownerId", "status", "createdAt", "updatedAt"],
+      "properties": {
+        "ownerId": { "type": "string", "format": "uuid" },
+        "status": { "enum": ["draft", "published", "archived"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" }
+      }
+    },
+    "systemData": { "type": "object" }
+  }
+}

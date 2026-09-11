@@ -107,7 +107,7 @@ Construire une application hébergée sur Smarter ASP permettant de créer, modi
 | ID | Tâche | État | Critère de sortie |
 | --- | --- | --- | --- |
 | 10.1 | Ajouter les tests unitaires, d’intégration et de régression visuelle prioritaires. | À faire | Pipeline de tests exécuté avant livraison. |
-| 10.2 | Préparer les environnements développement, préproduction et production Smarter ASP. | À faire | Déploiement documenté, reproductible et réversible. |
+| 10.2 | Préparer les environnements développement, préproduction et production Smarter ASP. | En cours | Workflows Web/API manuels et documentation préparés localement; builds et démarrage API Production validés. Publication, simulations distantes et recette IIS à effectuer. Voir [déploiement API](docs/DEPLOYMENT.md). |
 | 10.3 | Configurer les migrations de production, sauvegardes, logs et surveillance. | À faire | Exploitation et diagnostic possibles sans intervention sur le code. |
 | 10.4 | Réaliser la recette MVP, corriger les défauts bloquants et publier. | À faire | MVP utilisable en production. |
 

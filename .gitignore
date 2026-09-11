@@ -4,6 +4,10 @@
 **/node_modules/
 **/dist/
 .tools/
+/artifacts/
+/release/
+*.publishsettings
+*.pubxml.user
 
 # Local configuration and secrets
 .env

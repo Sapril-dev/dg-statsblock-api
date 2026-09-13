@@ -71,7 +71,7 @@ Construire une application hébergée sur Smarter ASP permettant de créer, modi
 
 | ID | Tâche | État | Critère de sortie |
 | --- | --- | --- | --- |
-| 6.1 | Initialiser l’API REST, sa configuration par environnement, sa journalisation et sa documentation OpenAPI. | À faire | API démarrable localement avec endpoint de santé. |
+| 6.1 | Initialiser l’API REST, sa configuration par environnement, sa journalisation et sa documentation OpenAPI. | Terminée | API démarrable localement avec endpoint de santé, document OpenAPI 3.1 et interface Swagger configurable. |
 | 6.2 | Implémenter les endpoints de gestion des SB : créer, lire, modifier, supprimer et lister. | À faire | Le Web consomme l’API pour le cycle complet d’un SB. |
 | 6.3 | Implémenter les migrations, le dépôt de données et les règles de concurrence. | À faire | Les données persistent correctement et les conflits sont gérés. |
 | 6.4 | Mettre en place la validation serveur et les réponses d’erreurs cohérentes. | À faire | Les données invalides ne sont jamais persistées. |

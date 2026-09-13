@@ -2,6 +2,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var allowedWebOrigin = builder.Configuration["Cors:AllowedWebOrigin"]
     ?? throw new InvalidOperationException("Cors:AllowedWebOrigin must be configured.");
+var swaggerEnabled = builder.Configuration.GetValue(
+    "Swagger:Enabled",
+    builder.Environment.IsDevelopment());
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -19,9 +22,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (swaggerEnabled)
 {
     app.MapOpenApi();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "DunorGames StatsBlock API v1");
+        options.DocumentTitle = "DunorGames StatsBlock API";
+    });
 }
 
 app.UseHttpsRedirection();

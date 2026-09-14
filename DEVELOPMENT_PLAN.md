@@ -62,10 +62,10 @@ aperçu afin’aperçu, afin d’éviter les divergences visuelles.
 
 | ID | Tâche | État | Critère de sortie |
 | --- | --- | --- | --- |
-| 5.1 | Créer la navigation, la liste de SB et le flux de création d’un SB. | À faire | Un utilisateur peut créer et ouvrir un brouillon local. |
-| 5.2 | Construire le formulaire d’édition DH avec validation progressive. | À faire | Tous les champs du schéma DH sont éditables. |
-| 5.3 | Connecter le formulaire à l’aperçu en direct. | À faire | Toute modification est visible sans rechargement complet. |
-| 5.4 | Ajouter la gestion des sections, capacités et mises en emphase (gras/italique). | À faire | Les règles et leur hiérarchie sont éditables. |
+| 5.1 | Créer la navigation, la liste de SB et le flux de création d’un SB. | Terminée | Un utilisateur peut créer, retrouver et ouvrir un brouillon Daggerheart conservé localement. |
+| 5.2 | Construire le formulaire d’édition DH avec validation progressive. | Terminée | Tous les champs du schéma DH sont éditables, validés au champ et sauvegardés localement. |
+| 5.3 | Connecter le formulaire à l’aperçu en direct. | Terminée | Les modifications visuelles alimentent immédiatement le rendu Daggerheart sans rechargement ni changement de route. |
+| 5.4 | Ajouter la gestion des sections, capacités et mises en emphase (gras/italique). | Terminée | Les capacités sont ajoutées, retirées, ordonnées, déplacées entre sections et rendues avec une emphase contrôlée. |
 
 ## Épic 6 — API REST et persistance
 
@@ -113,4 +113,4 @@ aperçu afin’aperçu, afin d’éviter les divergences visuelles.
 
 ## Prochaine tâche proposée
 
-**5.1 — Créer la navigation, la liste de SB et le flux de création d’un SB.** Cette tâche amorcera l’éditeur Web MVP avec des brouillons locaux avant sa connexion à l’API.
+**6.2 — Implémenter les endpoints de gestion des SB : créer, lire, modifier, supprimer et lister.** L’Épic 5 étant terminé, cette tâche connectera ensuite le cycle complet du Web à l’API REST.

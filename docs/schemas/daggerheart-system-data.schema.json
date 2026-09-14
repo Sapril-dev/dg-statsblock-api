@@ -38,6 +38,7 @@
           "name": { "type": "string", "minLength": 1 },
           "kind": { "enum": ["passive", "action", "reaction", "other"] },
           "cost": { "type": "string" },
+          "emphasis": { "type": "string" },
           "text": { "type": "string", "minLength": 1 }
         },
         "additionalProperties": true

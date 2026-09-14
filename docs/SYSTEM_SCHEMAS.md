@@ -16,6 +16,7 @@ D&D 5.5 est la base de données initiale du template partagé D&D/TotV. Tales of
 ## Règles de modélisation
 
 - Les actions, traits, réactions et améliorations sont des listes ordonnées de blocs de règles. Leur texte original est conservé.
+- Une entrée Daggerheart peut porter une propriété `emphasis` pour la portion nommée affichée en gras italique. Le champ `text` accepte le balisage contrôlé `**gras**`, `*italique*` et `***gras italique***`; aucun HTML libre n’est interprété.
 - Les champs purement d’affichage ne doivent pas servir à recalculer des règles ; les valeurs mécaniques et le texte affiché peuvent coexister.
 - Toute règle de conversion entre systèmes sera ajoutée à l’épic 9, jamais déduite de ces schémas.
 - Les valeurs inconnues ou non supportées restent dans une propriété additionnelle de `systemData` jusqu’à ce qu’un exemple confirme leur structure.

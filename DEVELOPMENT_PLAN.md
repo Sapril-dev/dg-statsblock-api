@@ -43,11 +43,11 @@ Construire une application hébergée sur Smarter ASP permettant de créer, modi
 
 | ID | Tâche | État | Critère de sortie |
 | --- | --- | --- | --- |
-| 3.1 | Intégrer les assets DunorGames, Cardo, Montserrat et les règles de licence dans l’application Web. | À faire | Les polices et assets se chargent localement et de façon reproductible. |
-| 3.2 | Créer les tokens CSS : palette, typographie, bordures, espacements et styles d’impression. | À faire | Aucun rendu ne dépend de valeurs dispersées. |
-| 3.3 | Construire le composant HTML/CSS DH avec largeur fixe et hauteur automatique. | À faire | Le composant rend un SB DH structuré à partir de données. |
-| 3.4 | Finaliser Street Bandit comme référence visuelle (« golden sample ») du template DH. | À faire | Comparaison visuelle approuvée et capture de référence conservée. |
-| 3.5 | Mettre en place les tests de régression visuelle du template DH. | À faire | Toute variation significative est détectée automatiquement. |
+| 3.1 | Intégrer les assets DunorGames, Cardo, Montserrat et les règles de licence dans l’application Web. | Terminée | Les polices et assets se chargent localement et de façon reproductible. |
+| 3.2 | Créer les tokens CSS : palette, typographie, bordures, espacements et styles d’impression. | Terminée | Aucun rendu ne dépend de valeurs dispersées. |
+| 3.3 | Construire le composant HTML/CSS DH avec largeur fixe et hauteur automatique. | Terminée | Le composant rend un SB DH structuré à partir de données. |
+| 3.4 | Finaliser Street Bandit comme référence visuelle (« golden sample ») du template DH. | Terminée | Comparaison visuelle approuvée et capture de référence conservée. |
+| 3.5 | Mettre en place les tests de régression visuelle du template DH. | Terminée | Toute variation significative est détectée automatiquement. |
 
 ## Épic 4 — Aperçu et export
 
@@ -107,10 +107,10 @@ Construire une application hébergée sur Smarter ASP permettant de créer, modi
 | ID | Tâche | État | Critère de sortie |
 | --- | --- | --- | --- |
 | 10.1 | Ajouter les tests unitaires, d’intégration et de régression visuelle prioritaires. | À faire | Pipeline de tests exécuté avant livraison. |
-| 10.2 | Préparer les environnements développement, préproduction et production Smarter ASP. | En cours | Workflows Web/API manuels et documentation préparés localement; builds et démarrage API Production validés. Publication, simulations distantes et recette IIS à effectuer. Voir [déploiement API](docs/DEPLOYMENT.md). |
+| 10.2 | Préparer les environnements développement, préproduction et production Smarter ASP. | Terminée | Déploiements Web/API documentés et reproductibles; publications SmarterASP et contrôles publics réussis. Voir [déploiement API](docs/DEPLOYMENT.md). |
 | 10.3 | Configurer les migrations de production, sauvegardes, logs et surveillance. | À faire | Exploitation et diagnostic possibles sans intervention sur le code. |
 | 10.4 | Réaliser la recette MVP, corriger les défauts bloquants et publier. | À faire | MVP utilisable en production. |
 
 ## Prochaine tâche proposée
 
-**3.1 — Intégrer les assets DunorGames, Cardo, Montserrat et les règles de licence dans l’application Web.** Cette tâche établira les ressources visuelles locales avant le premier composant de rendu.
+**4.1 — Créer une page d’aperçu isolée pour charger les exemples JSON et afficher le SB.** Cette tâche transformera la référence visuelle en aperçu alimenté par les exemples de données versionnés.

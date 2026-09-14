@@ -13,7 +13,7 @@ Un utilisateur peut :
 1. créer un SB DH à partir d’un formulaire ;
 2. voir l’aperçu se mettre à jour immédiatement ;
 3. enregistrer puis retrouver son SB ;
-4. exporter ce même rendu en PDF et en PNG haute résolution ;
+4. exporter ce même rendu en PNG haute résolution ;
 5. modifier ultérieurement le SB sans perte de mise en forme ni de données.
 
 ## Inclus dans le MVP
@@ -36,8 +36,7 @@ Un utilisateur peut :
 
 ### Exports
 
-- PDF imprimable fidèle à l’aperçu, avec les polices embarquées ou correctement référencées.
-- PNG haute résolution à au moins 300 PPI.
+- PNG sans perte à 600 PPI, avec résolution physique intégrée.
 - Détection des débordements avant l’export.
 
 ### Référence visuelle DH
@@ -64,12 +63,12 @@ Un utilisateur peut :
 | Référence DH | Street Bandit HTML/CSS est approuvé visuellement. |
 | Édition locale | Un SB DH peut être créé, modifié et prévisualisé dans le navigateur. |
 | Persistance | Le SB survit à une fermeture de session et est retrouvé dans la bibliothèque. |
-| Export | Le PDF et le PNG correspondent à l’aperçu validé. |
+| Export | Le PNG correspondent à l’aperçu validé. |
 | MVP publié | L’application est déployée et utilisable sur l’infrastructure Smarter ASP. |
 
 ## Décisions à prendre avant l’implémentation
 
-Ces décisions sont volontairement reportées à la tâche `1.2` et `1.3` : capacités de Smarter ASP, stack Web/API, identité et stratégie PDF.
+Ces décisions sont volontairement reportées à la tâche `1.2` et `1.3` : capacités de Smarter ASP, stack Web/API, identité et stratégie des exports.
 
 ## Critères d’acceptation de la tâche 1.1
 

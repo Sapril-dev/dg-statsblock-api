@@ -31,11 +31,11 @@ Cette évaluation confirme la faisabilité. Les restrictions propres au forfait 
 - PostgreSQL reste un choix valide si l’infrastructure existante ou les préférences d’exploitation le justifient.
 - La décision est reportée à `1.3`, après vérification du quota et du moteur réellement disponibles dans le forfait.
 
-### Export PDF et PNG
+### Export PNG
 
-- Le rendu source sera HTML/CSS, donc identique pour aperçu et impression.
+- Le rendu source sera HTML/CSS, donc identique pour aperçu et export PNG.
 - Ne pas dépendre au départ d’un Chromium/Playwright serveur sur un hébergement mutualisé : processus enfants, mémoire et binaires peuvent être limités.
-- Prévoir d’abord PDF par impression navigateur et PNG côté navigateur. Un export serveur ne sera ajouté qu’après validation de l’environnement ou via un service dédié.
+- Prévoir le PNG côté navigateur. Un export serveur ne sera ajouté qu'après validation de l'environnement ou via un service dédié.
 
 ### Fichiers et secrets
 

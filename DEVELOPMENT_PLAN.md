@@ -10,12 +10,12 @@ Construire une application hébergée sur Smarter ASP permettant de créer, modi
 - Le rendu des SB est fait en HTML/CSS imprimable : largeur définie, hauteur naturelle selon le contenu.
 - Les données, les règles de conversion et les templates de rendu restent indépendants.
 - Le déploiement cible Smarter ASP / IIS. Les technologies précises sont validées avant le démarrage : application Web, version d’ASP.NET Core pour l’API, et SQL Server ou PostgreSQL selon l’offre de production disponible.
-- Les exportations PDF/PNG doivent provenir du même rendu que l’aperçu, afin d’éviter les divergences visuelles.
+aperçu afin’aperçu, afin d’éviter les divergences visuelles.
 
 ## Convention de suivi
 
 - Une tâche est identifiée par `ÉPIC.TÂCHE` (par exemple `6.2`).
-- États : `À faire`, `En cours`, `Bloquée`, `Terminée`.
+- États : `À faire`, `En cours`, `Bloquée`, `Terminée`, `Retirée`.
 - Une tâche ne passe à `Terminée` qu’avec son critère de sortie rempli et une vérification adaptée.
 - Pour poursuivre, utiliser simplement : `next task 6.2`.
 
@@ -53,10 +53,10 @@ Construire une application hébergée sur Smarter ASP permettant de créer, modi
 
 | ID | Tâche | État | Critère de sortie |
 | --- | --- | --- | --- |
-| 4.1 | Créer une page d’aperçu isolée pour charger les exemples JSON et afficher le SB. | À faire | Street Bandit est visualisable sans éditeur complet. |
-| 4.2 | Produire l’export PDF à partir du rendu HTML/CSS et vérifier le résultat imprimé. | À faire | PDF fidèle à l’aperçu, avec polices intégrées. |
-| 4.3 | Produire l’export PNG haute résolution. | À faire | PNG au format et à la résolution configurables. |
-| 4.4 | Ajouter les contrôles de débordement, lisibilité et erreurs de contenu avant export. | À faire | Un SB invalide ou tronqué ne peut pas être exporté silencieusement. |
+| 4.1 | Créer une page d’aperçu isolée pour charger les exemples JSON et afficher le SB. | Terminée | Street Bandit est visualisable sans éditeur complet. |
+| 4.2 | Produire l’export PDF à partir du rendu HTML/CSS et vérifier le résultat imprimé. | Retirée | Hors périmètre : l’intégration Affinity utilise le PNG haute résolution. |
+| 4.3 | Produire l’export PNG haute résolution. | Terminée | PNG au format et à la résolution configurables. |
+| 4.4 | Ajouter les contrôles de débordement, lisibilité et erreurs de contenu avant export. | Terminée | Les anomalies sont détaillées avant export; l’utilisateur peut ensuite choisir « Exporter quand même ». |
 
 ## Épic 5 — Éditeur Web MVP
 
@@ -113,4 +113,4 @@ Construire une application hébergée sur Smarter ASP permettant de créer, modi
 
 ## Prochaine tâche proposée
 
-**4.1 — Créer une page d’aperçu isolée pour charger les exemples JSON et afficher le SB.** Cette tâche transformera la référence visuelle en aperçu alimenté par les exemples de données versionnés.
+**5.1 — Créer la navigation, la liste de SB et le flux de création d’un SB.** Cette tâche amorcera l’éditeur Web MVP avec des brouillons locaux avant sa connexion à l’API.

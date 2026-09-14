@@ -28,7 +28,6 @@ Le Web, l’API REST et la base de données constituent trois tiers distincts. L
 | Persistance | EF Core 10, migrations versionnées. | Écosystème .NET standard et migrations reproductibles. |
 | Base de données | SQL Server. | Choix le plus direct pour IIS/ASP.NET et l’hébergement Windows ; PostgreSQL reste une option de remplacement documentée. |
 | Authentification | ASP.NET Core Identity, cookies sécurisés HttpOnly et anti-forgery. | Pas de fournisseur externe requis pour le MVP ; adapté à une API sous le même domaine parent. |
-| PDF | Impression navigateur depuis le même HTML/CSS que l’aperçu. | Fidélité visuelle sans dépendre d’un navigateur headless sur un hébergement mutualisé. |
 | PNG | Rasterisation côté navigateur à haute densité. | Découple l’export PNG des limites de processus serveur ; validation détaillée à l’épic 4. |
 | Tests | xUnit pour l’API, Playwright pour les parcours et les régressions visuelles. | Les régressions de rendu sont détectées avant livraison. |
 
@@ -65,7 +64,7 @@ Si le forfait ne permet pas deux sites, l’API est exposée sous `/api` par une
 ## Décisions différées
 
 - Migration vers PostgreSQL seulement si le forfait ou l’exploitation le justifie.
-- Génération PDF/PNG serveur seulement après preuve que les processus nécessaires sont autorisés sur le forfait.
+- Génération PNG serveur seulement après preuve que les processus nécessaires sont autorisés sur le forfait.
 - Choix du fournisseur externe d’identité seulement si des exigences SSO/fédération apparaissent.
 - Mise en cache, file d’attente et stockage d’objets lorsque les besoins réels le justifieront.
 

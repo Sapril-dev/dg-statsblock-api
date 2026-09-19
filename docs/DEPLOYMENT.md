@@ -29,13 +29,26 @@ Web Deploy 3.6 est installé sur le runner Windows si nécessaire. Le site doit 
 
 ## Configuration de production
 
-Le fichier `appsettings.Production.json` fournit l'origine CORS HTTPS du site6, nécessaire au démarrage. La publication génère `web.config` avec `ASPNETCORE_ENVIRONMENT=Production`. Les secrets de connexion SQL seront configurés côté serveur lors de l'implémentation de la persistance applicative.
+Le fichier `appsettings.Production.json` fournit l’origine CORS HTTPS du site6, nécessaire au démarrage. La publication génère `web.config` avec `ASPNETCORE_ENVIRONMENT=Production`.
 
-L'API actuelle ne raccorde pas encore le DbContext aux endpoints. `/health` vérifie son fonctionnement HTTP, pas la connexion SQL. Aucune migration, création de compte SQL, restauration ou modification de BD n'est exécutée par ce workflow. Les routes `/api/v1/statblocks` restent à implémenter dans l'épic 6.
+La chaîne SQL doit être fournie côté serveur sous
+`ConnectionStrings:DunorGames` (variable d’environnement
+`ConnectionStrings__DunorGames`). Elle n’est jamais placée dans GitHub ou dans
+un fichier versionné. Tant que l’identité n’est pas ajoutée à l’Épic 7, le
+propriétaire unique est configurable avec `Statblocks:DefaultOwnerId`.
+
+Le DbContext SQL Server alimente les routes `/api/v1/statblocks`. `/health`
+vérifie encore le fonctionnement HTTP, pas la connexion SQL. Aucune migration,
+création de compte SQL, restauration ou modification de BD n’est exécutée par
+le workflow.
+
+Avant le déploiement de cette version, exécuter
+`docs/sql/002_add_statblock_aliases.sql` sur la base qui possède déjà la
+migration initiale.
 
 ## Validation et retour arrière
 
-Validation locale : cinq tests, publication Release IIS, démarrage du paquet en Production, `/health` à 200, CORS autorisant le site6 et refusant une autre origine. La connexion Web Deploy, le certificat distant et l'exécution IIS restent à valider en simulation puis sur l'hébergement.
+Validation locale : dix-sept tests API, publication Release IIS, démarrage du paquet en Production, `/health` à 200, CORS autorisant le site6 et refusant une autre origine. La connexion Web Deploy, le certificat distant et l'exécution IIS restent à valider en simulation puis sur l'hébergement.
 
 Les artefacts de build sont conservés sept jours. Avant le premier déploiement, sauvegarder les fichiers existants dans SmarterASP. Pour un retour arrière ultérieur, publier une version revue de `main` (par exemple un revert) et relancer le workflow; cela n'annule jamais des migrations SQL. Aucun rollback automatique n'est configuré.
 

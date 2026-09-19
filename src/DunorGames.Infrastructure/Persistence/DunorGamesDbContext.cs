@@ -46,6 +46,7 @@ public sealed class DunorGamesDbContext(DbContextOptions<DunorGamesDbContext> op
             entity.Property(statblock => statblock.SystemCode).HasColumnName("System").HasMaxLength(32).IsRequired();
             entity.Property(statblock => statblock.Name).HasMaxLength(200).IsRequired();
             entity.Property(statblock => statblock.Subtitle).HasMaxLength(200);
+            entity.Property(statblock => statblock.AliasesJson).HasColumnType("nvarchar(max)");
             entity.Property(statblock => statblock.Description).HasColumnType("nvarchar(max)");
             entity.Property(statblock => statblock.Origin).HasMaxLength(16).IsRequired();
             entity.Property(statblock => statblock.SourceSystemCode).HasColumnName("SourceSystem").HasMaxLength(32);

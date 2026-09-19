@@ -367,6 +367,8 @@ components:
         instance:
           type: [string, 'null']
           format: uri-reference
+        traceId:
+          type: string
         errors:
           type: [object, 'null']
           additionalProperties:

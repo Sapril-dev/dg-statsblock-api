@@ -2,6 +2,8 @@
 
 Chaque fichier de `schemas/` valide le contenu de `systemData` d’une enveloppe `Statblock` version `1.0`.
 
+L’API intègre ces fichiers comme ressources et les utilise directement à l’exécution. Pour un brouillon ou une archive, elle ignore seulement les propriétés `required` afin de permettre le travail incomplet; toutes les valeurs présentes restent validées. Pour un SB publié, les propriétés obligatoires sont également exigées. Une incompatibilité retourne un `422 application/problem+json` et aucune écriture n’est effectuée.
+
 Les schémas imposent les éléments indispensables au rendu et conservent des objets extensibles (`additionalProperties: true`) pour les champs de règles non encore rencontrés. Un ajout de champ est donc non destructif ; une révision de champ existant exige une nouvelle version de schéma.
 
 | Système | Schéma | Référence initiale |

@@ -7,35 +7,37 @@ public sealed class StatblockEntity
     // A future ASP.NET Core Identity migration will use the same Guid key type.
     public Guid OwnerId { get; init; }
 
-    public string SchemaVersion { get; init; } = string.Empty;
+    public string SchemaVersion { get; set; } = string.Empty;
 
-    public string SystemCode { get; init; } = string.Empty;
+    public string SystemCode { get; set; } = string.Empty;
 
-    public string Name { get; init; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
-    public string? Subtitle { get; init; }
+    public string? Subtitle { get; set; }
 
-    public string? Description { get; init; }
+    public string? AliasesJson { get; set; }
 
-    public string Origin { get; init; } = string.Empty;
+    public string? Description { get; set; }
 
-    public string? SourceSystemCode { get; init; }
+    public string Origin { get; set; } = string.Empty;
 
-    public Guid? SourceStatblockId { get; init; }
+    public string? SourceSystemCode { get; set; }
 
-    public string? SourceReference { get; init; }
+    public Guid? SourceStatblockId { get; set; }
 
-    public string Status { get; init; } = "draft";
+    public string? SourceReference { get; set; }
 
-    public string? Notes { get; init; }
+    public string Status { get; set; } = "draft";
 
-    public string SystemDataJson { get; init; } = "{}";
+    public string? Notes { get; set; }
+
+    public string SystemDataJson { get; set; } = "{}";
 
     public DateTimeOffset CreatedAt { get; init; }
 
-    public DateTimeOffset UpdatedAt { get; init; }
+    public DateTimeOffset UpdatedAt { get; set; }
 
-    public byte[] RowVersion { get; init; } = [];
+    public byte[] RowVersion { get; set; } = [];
 
     public ICollection<StatblockTagEntity> Tags { get; init; } = new List<StatblockTagEntity>();
 }

@@ -72,9 +72,9 @@ aperçu afin’aperçu, afin d’éviter les divergences visuelles.
 | ID | Tâche | État | Critère de sortie |
 | --- | --- | --- | --- |
 | 6.1 | Initialiser l’API REST, sa configuration par environnement, sa journalisation et sa documentation OpenAPI. | Terminée | API démarrable localement avec endpoint de santé, document OpenAPI 3.1 et interface Swagger configurable. |
-| 6.2 | Implémenter les endpoints de gestion des SB : créer, lire, modifier, supprimer et lister. | À faire | Le Web consomme l’API pour le cycle complet d’un SB. |
-| 6.3 | Implémenter les migrations, le dépôt de données et les règles de concurrence. | À faire | Les données persistent correctement et les conflits sont gérés. |
-| 6.4 | Mettre en place la validation serveur et les réponses d’erreurs cohérentes. | À faire | Les données invalides ne sont jamais persistées. |
+| 6.2 | Implémenter les endpoints de gestion des SB : créer, lire, modifier, supprimer et lister. | Terminée | Le Web consomme l’API pour le cycle complet d’un SB. |
+| 6.3 | Implémenter les migrations, le dépôt de données et les règles de concurrence. | Terminée | Les données persistent via EF Core/SQL Server, les alias sont migrés et les conflits sont gérés par ETag/rowversion. |
+| 6.4 | Mettre en place la validation serveur et les réponses d’erreurs cohérentes. | Terminée | Les brouillons incomplets restent sauvegardables, les valeurs invalides ne sont jamais persistées et la publication exige un schéma complet. |
 
 ## Épic 7 — Identité, sécurité et bibliothèque
 
@@ -113,4 +113,4 @@ aperçu afin’aperçu, afin d’éviter les divergences visuelles.
 
 ## Prochaine tâche proposée
 
-**6.2 — Implémenter les endpoints de gestion des SB : créer, lire, modifier, supprimer et lister.** L’Épic 5 étant terminé, cette tâche connectera ensuite le cycle complet du Web à l’API REST.
+**7.1 — Choisir le modèle d’identité compatible avec l’hébergement et définir les rôles.** Cette tâche documentera la stratégie d’authentification, les rôles et le flux de connexion avant toute implémentation de sécurité.

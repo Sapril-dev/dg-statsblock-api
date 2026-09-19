@@ -31,6 +31,8 @@ L'archivage et la restauration sont des mises à jour complètes avec `PUT`: le 
 
 Un `PUT` est un remplacement complet des champs modifiables. Il peut modifier le statut, les notes et `systemData`, mais pas l'identifiant, le propriétaire ou la date de création.
 
+La validation de `systemData` est progressive. Un SB `draft` ou `archived` peut omettre les champs encore inconnus; tout champ présent doit néanmoins respecter le type, les contraintes et les valeurs permises par le schéma du système. Le passage à `published` exige tous les champs obligatoires du schéma. Le schéma Tales of the Valiant n'étant pas encore défini, ses brouillons peuvent être sauvegardés, mais leur publication reste refusée avec un `422` jusqu'à l'ajout d'un schéma approuvé.
+
 ## Concurrence
 
 La lecture individuelle retourne un `ETag` opaque. Toute mutation (`PUT`, `DELETE`) doit fournir cet ETag dans `If-Match`.
@@ -40,7 +42,7 @@ La lecture individuelle retourne un `ETag` opaque. Toute mutation (`PUT`, `DELET
 
 ## Erreurs
 
-Les erreurs utilisent le type média `application/problem+json`, selon RFC 9457. Les réponses comportent au minimum `type`, `title` et `status`; elles peuvent ajouter `detail`, `instance` et `errors` pour les erreurs de validation.
+Les erreurs utilisent le type média `application/problem+json`, selon RFC 9457. Les réponses comportent `type`, `title`, `status`, `instance` et `traceId`; les erreurs de validation ajoutent un dictionnaire `errors` indexé par chemin de champ. Le Web affiche ces messages sans masquer le champ concerné.
 
 | Situation | Statut HTTP |
 | --- | --- |

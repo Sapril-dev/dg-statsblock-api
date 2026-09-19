@@ -15,7 +15,7 @@
 ## Web et API
 
 - Le Web consomme le contrat OpenAPI de l’API ; le domaine ne dépend ni d’HTTP ni d’EF Core.
-- La validation est appliquée dans le Web pour l’expérience utilisateur et dans l’API comme autorité.
+- La validation est appliquée dans le Web pour l’expérience utilisateur et dans l’API comme autorité. Les brouillons peuvent être incomplets, mais chaque valeur présente doit être valide; la publication exige le schéma système complet.
 - Toute nouvelle origine Web doit être explicitement ajoutée à la politique CORS.
 
 ## Rendu de stats blocks

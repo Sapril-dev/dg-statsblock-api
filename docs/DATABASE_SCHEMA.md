@@ -7,7 +7,7 @@ La persistance DunorGames utilise SQL Server et EF Core 10. La migration initial
 | Table | Rôle |
 | --- | --- |
 | `GameSystems` | Référentiel immuable des cinq systèmes pris en charge. |
-| `Statblocks` | Données communes, provenance, statut, contenu JSON du système et contrôle de concurrence. |
+| `Statblocks` | Données communes, alias JSON, provenance, statut, contenu JSON du système et contrôle de concurrence. |
 | `StatblockTags` | Tags d'un SB, normalisés dans une table enfant. |
 
 `GameSystems` est alimentée par la migration avec `dungeonsAndDragons`, `talesOfTheValiant`, `daggerheart`, `drawSteel` et `dc20`.
@@ -15,6 +15,10 @@ La persistance DunorGames utilise SQL Server et EF Core 10. La migration initial
 ## `Statblocks`
 
 La table conserve les attributs communs recherchables (`OwnerId`, système, nom, statut et dates) dans des colonnes SQL. `SystemDataJson` garde le document spécifique à DH, DS, DC20 ou D&D/TotV: ce choix respecte les schémas distincts définis à la tâche 2.2 sans dupliquer des colonnes rarement communes.
+
+`AliasesJson` conserve la liste optionnelle des alias sous forme JSON. Cette
+colonne est ajoutée par la migration `AddStatblockAliases` et son script
+`sql/002_add_statblock_aliases.sql`.
 
 Contraintes applicatives et SQL :
 

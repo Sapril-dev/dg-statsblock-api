@@ -3,7 +3,8 @@ param(
     [Parameter(Mandatory = $true)]
     [string] $PublishPath,
     [ValidateSet('simulate', 'deploy')]
-    [string] $Mode = 'simulate'
+    [string] $Mode = 'simulate',
+    [switch] $PreserveServerConfiguration
 )
 
 $ErrorActionPreference = 'Stop'
@@ -39,9 +40,27 @@ if ($query['site'] -ne $env:SMARTERASP_WEBDEPLOY_SITE_NAME) {
 }
 
 $publishDirectory = (Resolve-Path -LiteralPath $PublishPath).ProviderPath
-foreach ($file in @('DunorGames.Api.dll', 'web.config', 'appsettings.Production.json')) {
+foreach ($file in @('DunorGames.WebApi.dll', 'web.config', 'appsettings.json')) {
     if (-not (Test-Path -LiteralPath (Join-Path $publishDirectory $file) -PathType Leaf)) {
         throw "Missing API publish file: $file"
+    }
+}
+
+$productionFile = Join-Path $publishDirectory 'appsettings.Production.json'
+if ($PreserveServerConfiguration) {
+    if (Test-Path -LiteralPath $productionFile) {
+        throw 'Server configuration mode forbids publishing appsettings.Production.json.'
+    }
+}
+else {
+    if (-not (Test-Path -LiteralPath $productionFile)) {
+        throw 'Local publication requires appsettings.Production.json, or use -PreserveServerConfiguration for a server already configured.'
+    }
+    try { $configuration = Get-Content -LiteralPath $productionFile -Raw | ConvertFrom-Json }
+    catch { throw 'Invalid production JSON configuration.' }
+    $connection = $configuration.ConnectionStrings.DefaultConnection
+    if ([string]::IsNullOrWhiteSpace($connection) -or $connection -match '<[^>]+>') {
+        throw 'Fill the production DefaultConnection placeholders before publication.'
     }
 }
 

@@ -120,4 +120,15 @@ aperçu afin’aperçu, afin d’éviter les divergences visuelles.
 
 ## Prochaine tâche proposée
 
+### Configuration SQL et automatisation — 2026-10-03
+
+- Structure API alignée sur WebApi / Business / Data; migrations déplacées sans changement d'identifiants.
+- DefaultConnection, surcharges Development/Production ignorées, exemples versionnés.
+- Scripts EF générés dans Data/Script SQL (UTF-8 BOM, CRLF).
+- Pipeline API : push main → tests → déploiement → santé HTTP et lecture SQL; PR sans déploiement.
+- Paquet CI sans surcharges ni secrets; configuration serveur préservée par Web Deploy.
+- Vérifié localement : 17 tests API, lecture HTTP SQL LocalDB à 200 et contenu du paquet IIS.
+- Avant push : installer la configuration DefaultConnection réelle sur SmarterASP. Aucun déploiement de cette réorganisation effectué.
+- Guide : [Configuration SQL](docs/CONFIGURATION_SQL.md).
+
 **7.1 — Choisir le modèle d’identité compatible avec l’hébergement et définir les rôles.** Cette tâche documentera la stratégie d’authentification, les rôles et le flux de connexion avant toute implémentation de sécurité.

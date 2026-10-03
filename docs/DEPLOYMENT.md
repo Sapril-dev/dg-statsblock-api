@@ -2,7 +2,9 @@
 
 Destination : **dgstatsblockapi / site7**, https://sa8techno-001-site7.gtempurl.com/.
 
-Le workflow `.github/workflows/smarterasp.yml` restaure la solution, exécute les tests et produit un paquet Release IIS. Push et PR lancent uniquement ces vérifications. Le job de publication ne s'exécute qu'au déclenchement manuel sur `main`.
+Le workflow `.github/workflows/smarterasp.yml` restaure la solution, exécute les tests et produit un paquet Release IIS. Chaque push sur `main` déploie automatiquement après ces vérifications. Les PR ne déploient pas. Le lancement manuel conserve les modes `simulate` et `deploy`.
+
+Voir [Configuration SQL](CONFIGURATION_SQL.md) pour la nouvelle structure WebApi/Business/Data, les commandes LocalDB et l'installation initiale du fichier Production.
 
 ## Paramètres GitHub Actions
 
@@ -23,18 +25,17 @@ Les secrets ne sont injectés que dans l'étape de synchronisation. Le script ut
 2. Dans GitHub **Actions → SmarterASP API → Run workflow**, sélectionner `main` et `simulate`.
 3. Après validation des accès et de la destination, relancer avec `deploy`.
 
-La simulation utilise `WhatIf` et n'active pas `AppOffline`. Le déploiement réel utilise `AppOffline` pendant la synchronisation des fichiers. `DoNotDelete` préserve les fichiers absents du paquet; les fichiers de même nom sont remplacés, dont `web.config` et `appsettings.Production.json`. Sauvegarder les configurations serveur existantes avant le premier transfert. Ne pas placer de secrets manuellement dans ces fichiers remplacés.
+La simulation utilise `WhatIf` et n'active pas `AppOffline`. Le déploiement réel utilise `AppOffline` pendant la synchronisation. `DoNotDelete` préserve les fichiers absents du paquet. Le fichier Production est exclu du paquet CI et reste sur le serveur. `web.config` est remplacé : ne pas y placer les secrets SQL.
 
 Web Deploy 3.6 est installé sur le runner Windows si nécessaire. Le site doit accepter les publications Web Deploy et disposer du runtime/hébergement ASP.NET Core **10**, car le paquet est framework-dependent. Le script ne change pas la version .NET de l'hébergement.
 
 ## Configuration de production
 
-Le fichier `appsettings.Production.json` fournit l’origine CORS HTTPS du site6, nécessaire au démarrage. La publication génère `web.config` avec `ASPNETCORE_ENVIRONMENT=Production`.
+Le fichier serveur `appsettings.Production.json` fournit la connexion SQL, l'origine CORS HTTPS de site6 et Swagger. La publication ne définit aucune variable d'environnement; ASP.NET Core utilise Production par défaut.
 
 La chaîne SQL doit être fournie côté serveur sous
-`ConnectionStrings:DunorGames` (variable d’environnement
-`ConnectionStrings__DunorGames`). Elle n’est jamais placée dans GitHub ou dans
-un fichier versionné. Tant que l’identité n’est pas ajoutée à l’Épic 7, le
+`ConnectionStrings:DefaultConnection` dans le fichier Production ignoré par Git.
+Elle n’entre pas dans un artefact CI. Tant que l’identité n’est pas ajoutée à l’Épic 7, le
 propriétaire unique est configurable avec `Statblocks:DefaultOwnerId`.
 
 Le DbContext SQL Server alimente les routes `/api/v1/statblocks`. `/health`
@@ -42,9 +43,9 @@ vérifie encore le fonctionnement HTTP, pas la connexion SQL. Aucune migration,
 création de compte SQL, restauration ou modification de BD n’est exécutée par
 le workflow.
 
-Avant le déploiement de cette version, exécuter
-`docs/sql/002_add_statblock_aliases.sql` sur la base qui possède déjà la
-migration initiale.
+Avant le déploiement, vérifier les migrations déjà enregistrées. Exécuter uniquement
+les transitions manquantes depuis `src/DunorGames.Data/Script SQL/` dans SSMS.
+La réorganisation des projets n'ajoute aucune migration.
 
 ## Validation et retour arrière
 

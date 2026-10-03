@@ -1,4 +1,4 @@
-using DunorGames.Contracts.Statblocks;
+using DunorGames.Business.Statblocks;
 
 public sealed class StatblockApiContractTests
 {

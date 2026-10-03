@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
-using DunorGames.Infrastructure.Persistence;
-using DunorGames.Infrastructure.Persistence.Entities;
+using DunorGames.Data.Persistence;
+using DunorGames.Data.Persistence.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

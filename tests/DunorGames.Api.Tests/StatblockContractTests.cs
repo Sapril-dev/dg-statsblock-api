@@ -1,6 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using DunorGames.Contracts.Statblocks;
+using DunorGames.Business.Statblocks;
 
 public sealed class StatblockContractTests
 {

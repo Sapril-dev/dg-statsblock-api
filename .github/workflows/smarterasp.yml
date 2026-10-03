@@ -18,7 +18,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: api-${{ github.event_name == 'workflow_dispatch' && 'smarterasp-site7' || github.ref }}
+  group: api-${{ github.ref == 'refs/heads/main' && 'smarterasp-site7' || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -34,13 +34,15 @@ jobs:
           dotnet-version: '10.0.x'
       - run: dotnet restore DunorGames.slnx
       - run: dotnet test DunorGames.slnx --configuration Release --no-restore
-      - run: dotnet publish src/DunorGames.Api/DunorGames.Api.csproj --configuration Release --no-restore --output release /p:EnvironmentName=Production
+      - run: dotnet publish src/DunorGames.WebApi/DunorGames.WebApi.csproj --configuration Release --no-restore --output release /p:ContinuousIntegrationBuild=true
       - name: Check IIS publish content
         shell: pwsh
         run: |
-          foreach ($file in @('release/DunorGames.Api.dll', 'release/web.config', 'release/appsettings.Production.json')) {
+          foreach ($file in @('release/DunorGames.WebApi.dll', 'release/web.config', 'release/appsettings.json')) {
             if (-not (Test-Path -LiteralPath $file)) { throw "Missing publish output: $file" }
           }
+          if (Test-Path release/appsettings.Production.json) { throw 'Production secrets must not enter a CI artifact.' }
+          if (Test-Path release/appsettings.Development.json) { throw 'Development overrides must not enter a CI artifact.' }
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: api-${{ github.sha }}
@@ -49,7 +51,7 @@ jobs:
           retention-days: 7
 
   publish:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     needs: build
     runs-on: windows-2022
     timeout-minutes: 20
@@ -78,13 +80,21 @@ jobs:
           SMARTERASP_WEBDEPLOY_URL: ${{ secrets.SMARTERASP_WEBDEPLOY_URL }}
           SMARTERASP_WEBDEPLOY_USERNAME: ${{ secrets.SMARTERASP_WEBDEPLOY_USERNAME }}
           SMARTERASP_WEBDEPLOY_PASSWORD: ${{ secrets.SMARTERASP_WEBDEPLOY_PASSWORD }}
-          DEPLOYMENT_MODE: ${{ inputs.mode }}
-        run: ./scripts/Deploy-SmarterAsp.ps1 -PublishPath ./release -Mode $env:DEPLOYMENT_MODE
+          DEPLOYMENT_MODE: ${{ github.event_name == 'push' && 'deploy' || inputs.mode }}
+        run: ./scripts/Deploy-SmarterAsp.ps1 -PublishPath ./release -Mode $env:DEPLOYMENT_MODE -PreserveServerConfiguration
       - name: Check public API health
-        if: inputs.mode == 'deploy'
+        if: github.event_name == 'push' || inputs.mode == 'deploy'
         shell: pwsh
         run: |
           curl.exe --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 5 --max-time 30 https://sa8techno-001-site7.gtempurl.com/health
           if ($LASTEXITCODE -ne 0) {
-            throw 'Web Deploy completed, but the public API health check failed. Inspect the ASP.NET Core startup logs on SmarterASP; verify the .NET 10 runtime and the server-side ConnectionStrings__DunorGames setting. HTTP 502 alone does not identify the startup error. No database migrations were executed.'
+            throw 'Web Deploy completed, but the public API health check failed. Inspect ASP.NET Core startup logs on SmarterASP and verify .NET 10. Configure ConnectionStrings:DefaultConnection in the server-only appsettings.Production.json. HTTP 502 alone does not identify the startup error. No database migrations were executed.'
+          }
+      - name: Check public API database read
+        if: github.event_name == 'push' || inputs.mode == 'deploy'
+        shell: pwsh
+        run: |
+          curl.exe --fail --silent --show-error --output NUL --retry 2 --retry-all-errors --retry-delay 5 --max-time 30 https://sa8techno-001-site7.gtempurl.com/api/v1/statblocks
+          if ($LASTEXITCODE -ne 0) {
+            throw 'API started but the statblock database read failed. Check server-only DefaultConnection and the manually applied SQL migrations. No response data or secrets are logged.'
           }

@@ -10,7 +10,7 @@ Navigateur
   ↓ HTTPS
 DunorGames.Web (React / TypeScript)
   ↓ HTTPS + OpenAPI
-DunorGames.Api (ASP.NET Core 10)
+DunorGames.WebApi (ASP.NET Core 10)
   ↓ EF Core 10
 SQL Server
 ```
@@ -36,10 +36,9 @@ Le Web, l’API REST et la base de données constituent trois tiers distincts. L
 ```text
 /src
   /DunorGames.Web          React / TypeScript
-  /DunorGames.Api          ASP.NET Core REST
-  /DunorGames.Domain       Modèle métier et règles sans dépendance HTTP/EF
-  /DunorGames.Infrastructure EF Core, SQL Server et accès externes
-  /DunorGames.Contracts    DTO et génération OpenAPI
+  /DunorGames.WebApi       ASP.NET Core REST et configuration
+  /DunorGames.Business     Services, DTO et validation
+  /DunorGames.Data         Modèles, EF Core, SQL Server, migrations et Script SQL
 /tests
   /DunorGames.Api.Tests
   /DunorGames.Web.E2E

@@ -8,13 +8,13 @@
 ## Configuration et secrets
 
 - `appsettings.json` contient seulement des valeurs sûres par défaut.
-- `appsettings.Development.local.json` et `.env*` contiennent les paramètres locaux et ne sont jamais committés.
+- `appsettings.Development.json`, `appsettings.Production.json`, `appsettings.*.local.json` et `.env*` ne sont jamais committés. Seules les surcharges standard Development/Production sont chargées automatiquement.
 - `appsettings.Development.example.json` sert de modèle sans secret.
-- Production et préproduction reçoivent leurs secrets depuis la configuration Smarter ASP ou le mécanisme de déploiement choisi.
+- Production reçoit ses secrets dans son fichier `appsettings.Production.json` serveur; le pipeline préserve ce fichier. Voir [Configuration SQL](CONFIGURATION_SQL.md).
 
 ## Web et API
 
-- Le Web consomme le contrat OpenAPI de l’API ; le domaine ne dépend ni d’HTTP ni d’EF Core.
+- Le Web consomme le contrat OpenAPI de l’API. Les services et DTO sont dans Business; les entités et la persistance dans Data; la composition des services dans WebApi.
 - La validation est appliquée dans le Web pour l’expérience utilisateur et dans l’API comme autorité. Les brouillons peuvent être incomplets, mais chaque valeur présente doit être valide; la publication exige le schéma système complet.
 - Toute nouvelle origine Web doit être explicitement ajoutée à la politique CORS.
 
@@ -27,5 +27,5 @@
 
 ## Vérification locale minimale
 
-- API : `dotnet test DunorGames.slnx` puis `dotnet run --project src/DunorGames.Api`.
+- API : `dotnet test DunorGames.slnx` puis `dotnet run --project src/DunorGames.WebApi --launch-profile http`.
 - Web : `npm run lint`, `npm run build`, puis `npm run dev` depuis `src/DunorGames.Web`.

@@ -111,6 +111,13 @@ aperçu afin’aperçu, afin d’éviter les divergences visuelles.
 | 10.3 | Configurer les migrations de production, sauvegardes, logs et surveillance. | À faire | Exploitation et diagnostic possibles sans intervention sur le code. |
 | 10.4 | Réaliser la recette MVP, corriger les défauts bloquants et publier. | À faire | MVP utilisable en production. |
 
+## Stabilisation du pipeline — 2026-10-03
+
+- Correctif Web préparé localement : checkout Web/API côte à côte, révision API figée, SDK .NET 10 explicite, chemins du cache et des diagnostics adaptés.
+- Vérification : les deux workflows sont des YAML valides; les 13 tests Playwright passent avec `CI=true`.
+- API : message du contrôle de santé amélioré. Le HTTP 502 de production reste à diagnostiquer sur SmarterASP; la configuration SQL serveur doit être vérifiée.
+- Restant avant clôture : commit/push, validation GitHub Actions, configuration API et validation des déploiements publics. Le statut historique de 10.2 ne confirme pas la livraison de l'Épic 6.
+
 ## Prochaine tâche proposée
 
 **7.1 — Choisir le modèle d’identité compatible avec l’hébergement et définir les rôles.** Cette tâche documentera la stratégie d’authentification, les rôles et le flux de connexion avant toute implémentation de sécurité.

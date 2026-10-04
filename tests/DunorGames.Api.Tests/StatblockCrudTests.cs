@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.AspNetCore.Hosting;
 
 public sealed class StatblockCrudTests : IClassFixture<ApiWebApplicationFactory>
 {
@@ -8,7 +9,10 @@ public sealed class StatblockCrudTests : IClassFixture<ApiWebApplicationFactory>
 
     public StatblockCrudTests(ApiWebApplicationFactory factory)
     {
-        client = factory.CreateClient();
+        client = factory.WithWebHostBuilder(builder =>
+            builder.UseSetting("Cors:AllowedWebOrigin", "https://web.example.test"))
+            .CreateClient();
+        client.DefaultRequestHeaders.Add("Origin", "https://web.example.test");
     }
 
     [Fact]
@@ -20,6 +24,7 @@ public sealed class StatblockCrudTests : IClassFixture<ApiWebApplicationFactory>
             CreatePayload(uniqueName));
 
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+        AssertEtagExposedToBrowser(createResponse);
         Assert.NotNull(createResponse.Headers.Location);
         var firstEtag = Assert.IsType<System.Net.Http.Headers.EntityTagHeaderValue>(
             createResponse.Headers.ETag);
@@ -35,6 +40,7 @@ public sealed class StatblockCrudTests : IClassFixture<ApiWebApplicationFactory>
 
         var getResponse = await client.GetAsync($"/api/v1/statblocks/{id:D}");
         getResponse.EnsureSuccessStatusCode();
+        AssertEtagExposedToBrowser(getResponse);
         Assert.Equal(firstEtag.Tag, getResponse.Headers.ETag?.Tag);
         using var getDocument = JsonDocument.Parse(
             await getResponse.Content.ReadAsStringAsync());
@@ -63,6 +69,7 @@ public sealed class StatblockCrudTests : IClassFixture<ApiWebApplicationFactory>
         var updateResponse = await client.SendAsync(updateRequest);
 
         updateResponse.EnsureSuccessStatusCode();
+        AssertEtagExposedToBrowser(updateResponse);
         var secondEtag = Assert.IsType<System.Net.Http.Headers.EntityTagHeaderValue>(
             updateResponse.Headers.ETag);
         Assert.NotEqual(firstEtag.Tag, secondEtag.Tag);
@@ -88,6 +95,16 @@ public sealed class StatblockCrudTests : IClassFixture<ApiWebApplicationFactory>
         Assert.Equal(
             HttpStatusCode.NotFound,
             (await client.GetAsync($"/api/v1/statblocks/{id:D}")).StatusCode);
+    }
+
+    private static void AssertEtagExposedToBrowser(HttpResponseMessage response)
+    {
+        Assert.Equal("https://web.example.test",
+            Assert.Single(response.Headers.GetValues("Access-Control-Allow-Origin")));
+        Assert.Contains(
+            response.Headers.GetValues("Access-Control-Expose-Headers")
+                .SelectMany(value => value.Split(',')),
+            value => string.Equals(value.Trim(), "ETag", StringComparison.OrdinalIgnoreCase));
     }
 
     private static object CreatePayload(string name) => new

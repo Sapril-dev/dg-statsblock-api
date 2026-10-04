@@ -81,6 +81,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("DunorGamesWeb", policy =>
     {
         policy.WithOrigins(allowedWebOrigin)
+            .WithExposedHeaders("ETag")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();

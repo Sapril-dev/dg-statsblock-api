@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 public sealed class ApiSmokeTests : IClassFixture<WebApplicationFactory<Program>>
@@ -7,7 +8,8 @@ public sealed class ApiSmokeTests : IClassFixture<WebApplicationFactory<Program>
 
     public ApiSmokeTests(WebApplicationFactory<Program> factory)
     {
-        client = factory.CreateClient();
+        client = factory.WithWebHostBuilder(builder =>
+            builder.UseSetting("Swagger:Enabled", "true")).CreateClient();
     }
 
     [Fact]

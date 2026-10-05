@@ -7,6 +7,8 @@ public sealed class DunorGamesDbContext(DbContextOptions<DunorGamesDbContext> op
 {
     public DbSet<GameSystemEntity> GameSystems => Set<GameSystemEntity>();
 
+    public DbSet<ReferenceValueEntity> ReferenceValues => Set<ReferenceValueEntity>();
+
     public DbSet<StatblockEntity> Statblocks => Set<StatblockEntity>();
 
     public DbSet<StatblockTagEntity> StatblockTags => Set<StatblockTagEntity>();
@@ -27,6 +29,24 @@ public sealed class DunorGamesDbContext(DbContextOptions<DunorGamesDbContext> op
                 new GameSystemEntity { Code = "daggerheart", DisplayName = "Daggerheart", SortOrder = 3 },
                 new GameSystemEntity { Code = "drawSteel", DisplayName = "Draw Steel", SortOrder = 4 },
                 new GameSystemEntity { Code = "dc20", DisplayName = "DC20", SortOrder = 5 });
+        });
+
+        modelBuilder.Entity<ReferenceValueEntity>(entity =>
+        {
+            entity.ToTable("ReferenceValues");
+            entity.HasKey(value => new { value.SystemCode, value.Category, value.Code });
+            entity.Property(value => value.SystemCode).HasMaxLength(32);
+            entity.Property(value => value.Category).HasMaxLength(40);
+            entity.Property(value => value.Code).HasMaxLength(40);
+            entity.Property(value => value.DisplayName).HasMaxLength(80).IsRequired();
+            entity.Property(value => value.SortOrder).IsRequired();
+            entity.Property(value => value.IsActive).HasDefaultValue(true).IsRequired();
+            entity.HasOne<GameSystemEntity>()
+                .WithMany()
+                .HasForeignKey(value => value.SystemCode)
+                .OnDelete(DeleteBehavior.Restrict);
+            entity.HasIndex(value => new { value.SystemCode, value.Category, value.SortOrder });
+            entity.HasData(DaggerheartReferenceValues.All);
         });
 
         modelBuilder.Entity<StatblockEntity>(entity =>

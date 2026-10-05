@@ -7,10 +7,20 @@ La persistance DunorGames utilise SQL Server et EF Core 10. La migration initial
 | Table | Rôle |
 | --- | --- |
 | `GameSystems` | Référentiel immuable des cinq systèmes pris en charge. |
+| `ReferenceValues` | Valeurs contrôlées des formulaires, par système et catégorie. |
 | `Statblocks` | Données communes, alias JSON, provenance, statut, contenu JSON du système et contrôle de concurrence. |
 | `StatblockTags` | Tags d'un SB, normalisés dans une table enfant. |
 
 `GameSystems` est alimentée par la migration avec `dungeonsAndDragons`, `talesOfTheValiant`, `daggerheart`, `drawSteel` et `dc20`.
+
+`ReferenceValues` a pour clé `(SystemCode, Category, Code)` et référence `GameSystems`.
+La migration `AddDaggerheartReferenceValues` fournit les catégories Daggerheart
+`tier`, `adversaryType`, `attackRange`, `damageType` et `damageDie`. L'API expose
+les entrées actives par `GET /api/v1/reference-values?system=daggerheart`.
+Le script SQL à appliquer avant de déployer l'API est
+[`sql/003_add_daggerheart_reference_values.sql`](sql/003_add_daggerheart_reference_values.sql).
+Les valeurs de SB restent dans `SystemDataJson` : les anciennes valeurs libres
+ne sont ni modifiées ni supprimées par ce changement.
 
 ## `Statblocks`
 

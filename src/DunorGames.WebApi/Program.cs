@@ -90,6 +90,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+if (useDevelopmentInMemoryDatabase)
+{
+    using var scope = app.Services.CreateScope();
+    scope.ServiceProvider.GetRequiredService<DunorGamesDbContext>()
+        .Database.EnsureCreated();
+}
+
 app.UseExceptionHandler();
 
 if (swaggerEnabled)
